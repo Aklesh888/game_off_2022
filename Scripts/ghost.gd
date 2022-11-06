@@ -45,7 +45,7 @@ func movement():
 			animationTree.set("parameters/idle/blend_position", direction)
 			animation_state.travel('idle')
 		HIT:
-			print('hit')
+			pass
 		CHASE:
 			#print('chase')
 			if player != null:
@@ -54,8 +54,6 @@ func movement():
 				direction = (player.global_position - position).normalized()
 				velocity = direction * SPEED
 				velocity = move_and_slide(velocity)
-				print(direction)
 		ATTACK:
 			animationTree.set("parameters/attack/blend_position", direction)
 			animation_state.travel('attack')
-			print('attacking')
