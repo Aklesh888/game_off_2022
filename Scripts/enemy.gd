@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
-const SPEED = 30 # speed of player
+const SPEED = 50 # speed of player
 
 var velocity = Vector2.ZERO # velocity of enemy
 var state = IDLE #default state
 var player: Node #reference to player
+var direction = Vector2.ZERO
 
 onready var animations = $AnimatedSprite
 onready var fireball_position = $fireball_position
@@ -29,20 +30,24 @@ func movement():
 	detect_player_in_area()
 	match state:
 		IDLE:
-			print('idle')
+			#print('idle')
 			animations.play("Idle")
 		ALERT:
 			print('alert')
 		SHOOT:
 			animations.play("Attack")
-			print('shoot')
+			if player.global_position.x >= position.x:
+				animations.flip_h = false
+			elif player.global_position.x <= position.x:
+				animations.flip_h = true
+			#print('shoot')
 		
 		HIT:
 			print('hit')
 		CHASE:
-			print('chase')
+			#print('chase')
 			animations.play("Run")
-			var direction = (player.global_position - position).normalized()
+			direction = (player.global_position - position).normalized()
 			velocity = direction * SPEED
 			velocity = move_and_slide(velocity)
 
@@ -54,6 +59,8 @@ func shoot(): #fires a fireball
 	FIREBALL.direction = global_position.direction_to(player.global_position)
 	FIREBALL.look_at(player.global_position)
 
+
+
 func detect_player_in_area():#detects if player is in the area and changes states accordingly  
 	var bodies = player_detector.get_overlapping_bodies()
 	if bodies != null:
@@ -62,7 +69,7 @@ func detect_player_in_area():#detects if player is in the area and changes state
 				player = body
 			if player != null: 
 				var player_distance = position.distance_to(player.get_global_position())
-				if player_distance <= 120 :
+				if player_distance <= 150 :
 					state = SHOOT
 				else:
 					state = CHASE

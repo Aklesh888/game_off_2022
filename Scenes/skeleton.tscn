@@ -190,7 +190,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=43]
-radius = 85.0529
+radius = 299.241
 
 [node name="skeleton" type="KinematicBody2D"]
 collision_layer = 2
@@ -210,7 +210,6 @@ offset = Vector2( 2, -2 )
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_detector"]
-position = Vector2( 80, -7 )
 shape = SubResource( 43 )
 
 [node name="fireball_position" type="Position2D" parent="."]
