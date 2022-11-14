@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://RPGMCharacter_v1.0/_side idle.png" type="Texture" id=2]
@@ -128,6 +128,9 @@ animations = [ {
 radius = 7.0
 height = 16.0
 
+[sub_resource type="CircleShape2D" id=27]
+radius = 47.0425
+
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 collision_mask = 6
 script = ExtResource( 1 )
@@ -151,5 +154,13 @@ position = Vector2( -28, 13 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
 position = Vector2( 28, -13 )
 shape = SubResource( 26 )
+
+[node name="weapon_detector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="weapon_detector"]
+shape = SubResource( 27 )
+
+[node name="sword_placement" type="Position2D" parent="."]
+position = Vector2( 12, 0 )
 
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]

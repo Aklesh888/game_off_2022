@@ -6,6 +6,7 @@ var velocity = Vector2.ZERO # velocity of enemy
 var state = IDLE #default state
 var player: Node #reference to player
 var direction = Vector2.ZERO
+var health = 100
 
 onready var animations = $AnimatedSprite
 onready var fireball_position = $fireball_position
@@ -24,7 +25,7 @@ onready var player_detector = $player_detector
 
 func _physics_process(delta):
 	movement()
-	
+	print(player)
 
 func movement():
 	detect_player_in_area()
@@ -66,7 +67,7 @@ func detect_player_in_area():#detects if player is in the area and changes state
 	if bodies != null:
 		for body in bodies:
 			if body.is_in_group("player"):
-				player = body
+				player = $'../Player'
 			if player != null: 
 				var player_distance = position.distance_to(player.get_global_position())
 				if player_distance <= 150 :
@@ -83,3 +84,12 @@ func _on_player_detector_body_exited(body):
 func _on_bullet_cooldown_timeout():
 	if state == SHOOT:
 		shoot()
+
+
+func _on_hurtbox_area_entered(area):
+	if area.is_in_group('damage_enemy'): 
+		health -= area.damage
+
+func death():
+	if health <= 0:
+		animations.play("death")

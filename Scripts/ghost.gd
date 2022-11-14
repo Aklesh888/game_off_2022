@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const SPEED = 50 # speed of player
+const SPEED = 100 # speed of player
 
 var velocity = Vector2.ZERO # velocity of enemy
 var state = IDLE #default state

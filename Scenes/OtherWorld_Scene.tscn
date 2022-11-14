@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/TX Tileset Grass.png" type="Texture" id=1]
 [ext_resource path="res://Assets/TX Struct.png" type="Texture" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://Assets/TX Tileset Wall.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/ghost.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/skeleton.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/bow_symbol.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/sword_symbol.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/necromancer.tscn" type="PackedScene" id=11]
 
 [sub_resource type="TileSet" id=16]
 0/name = "TX Tileset Grass.png 0"
@@ -770,4 +774,17 @@ format = 1
 tile_data = PoolIntArray( 6, 2, 0, 327682, 1, 0, 327685, 1, 0 )
 
 [node name="ghost" parent="." instance=ExtResource( 7 )]
-position = Vector2( 408, 270 )
+position = Vector2( 408, 269 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="skeleton" parent="." instance=ExtResource( 8 )]
+position = Vector2( 476, 60 )
+
+[node name="bow_symbol" parent="." instance=ExtResource( 9 )]
+position = Vector2( -123, 136 )
+
+[node name="sword_symbol" parent="." instance=ExtResource( 10 )]
+
+[node name="necromancer" parent="." instance=ExtResource( 11 )]
+position = Vector2( -150, 92 )
