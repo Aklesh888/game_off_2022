@@ -2,7 +2,9 @@ extends Area2D
 
 var direction = Vector2.ZERO
 var state
+var health = 200
 var enemy = preload("res://Scenes/skeleton.tscn")
+onready var health_box = $Control/ProgressBar
 onready var timer = $Timer
 onready var animations = $AnimationPlayer
 
@@ -35,6 +37,9 @@ func _on_AnimationPlayer_animation_finished(attack):
 	state = idle
 
 func _physics_process(delta):
+	health_box.value = health
+	if health <= 0:
+		queue_free()
 	match state:
 		idle:
 			animations.play("idle")
@@ -48,3 +53,9 @@ func _on_AnimationPlayer_animation_started(attack):
 
 func direction_checker():
 	pass
+
+
+func _on_hurtbox_area_entered(area):
+	print(health)
+	if area.is_in_group('damage_enemy'): 
+		health -= area.damage

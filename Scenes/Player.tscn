@@ -1,10 +1,11 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://RPGMCharacter_v1.0/_side idle.png" type="Texture" id=2]
 [ext_resource path="res://RPGMCharacter_v1.0/_side walk.png" type="Texture" id=3]
 [ext_resource path="res://RPGMCharacter_v1.0/_up walk.png" type="Texture" id=4]
 [ext_resource path="res://RPGMCharacter_v1.0/_down walk.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/theme.tres" type="Theme" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1.78766, 10 )
@@ -156,11 +157,29 @@ position = Vector2( 28, -13 )
 shape = SubResource( 26 )
 
 [node name="weapon_detector" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon_detector"]
 shape = SubResource( 27 )
 
 [node name="sword_placement" type="Position2D" parent="."]
 position = Vector2( 12, 0 )
+
+[node name="Health" type="Control" parent="."]
+margin_left = -18.0
+margin_top = -20.0
+margin_right = 22.0
+margin_bottom = 20.0
+rect_rotation = -0.271797
+
+[node name="ProgressBar" type="ProgressBar" parent="Health"]
+margin_left = 7.01415
+margin_top = -2.96676
+margin_right = 50.0142
+margin_bottom = 11.0332
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 6 )
+value = 70.0
+percent_visible = false
 
 [connection signal="area_entered" from="hurtbox" to="." method="_on_hurtbox_area_entered"]
