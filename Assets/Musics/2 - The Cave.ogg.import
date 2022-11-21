@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2 - The Cave.ogg-026df76a81c51c49eb48ab6f42261490.oggstr"
+
+[deps]
+
+source_file="res://Assets/Musics/2 - The Cave.ogg"
+dest_files=[ "res://.import/2 - The Cave.ogg-026df76a81c51c49eb48ab6f42261490.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

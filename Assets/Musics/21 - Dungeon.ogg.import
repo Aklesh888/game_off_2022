@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/21 - Dungeon.ogg-96968843601636077e9120ded7941dd0.oggstr"
+
+[deps]
+
+source_file="res://Assets/Musics/21 - Dungeon.ogg"
+dest_files=[ "res://.import/21 - Dungeon.ogg-96968843601636077e9120ded7941dd0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

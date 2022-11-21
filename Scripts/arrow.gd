@@ -13,5 +13,5 @@ func _physics_process(delta):
 
 
 func _on_arrow_area_entered(area):
-	if area.is_in_group('enemy'):
-		print('hit')
+	print('death')
+	queue_free()	

@@ -13,6 +13,8 @@ onready var animations = $AnimatedSprite
 onready var fireball_position = $fireball_position
 onready var fire_ball = preload("res://Scenes/fireball.tscn")
 onready var bullet_cd = $bullet_cooldown
+onready var animation_tree = $AnimationTree
+onready var animation_state = animation_tree.get('parameters/playback')
 
 enum {
 	IDLE,
@@ -30,31 +32,26 @@ func _physics_process(delta):
 	health_box.value = health
 
 func movement():
+	
 	death()
-	attack_frame()
 	detect_player_in_area()
 	match state:
 		IDLE:
-			animations.play("Idle")
+			pass
 		SHOOT:
-			animations.play("Attack")
-			if player.global_position.x >= global_position.x:
-				animations.flip_h = false
-			elif player.global_position.x <= global_position.x:
-				animations.flip_h = true
+			animation_state.travel('attack')
+			animation_tree.set("parameters/attack/blend_position", direction)
 		HIT:
-			animations.play("Hit")
 			state = IDLE
 		CHASE:
-			#print('chase')
-			animations.play("Run")
+			animation_tree.set("parameters/run/blend_position", direction)
 			direction = (player.global_position - position).normalized()
 			velocity = direction * SPEED
 			velocity = move_and_slide(velocity)
+			animation_state.travel('run')
 		DEATH:
 			queue_free()
-			print('dead')
-			
+
 
 func shoot(): #fires a fireball
 	var FIREBALL = fire_ball.instance()
@@ -70,7 +67,7 @@ func detect_player_in_area():#detects if player is in the area and changes state
 	if bodies != null:
 		for body in bodies:
 			if body.is_in_group("player"):
-				player = $'/root/OtherWorld_Scene/Player'
+				player =  get_tree().get_root().find_node('Player', true, false)
 			if player != null: 
 				var player_distance = position.distance_to(player.get_global_position())
 				if player_distance <= 150 :
@@ -88,20 +85,13 @@ func _on_bullet_cooldown_timeout():
 	if state == SHOOT:
 		shoot()
 
-func attack_frame():
-	if animations.animation == 'attack' and animations.frame == 8:
-		shoot()
 
 func death():
 	if health <= 0:
 		queue_free()
 
-func _on_AnimatedSprite_animation_finished():
-	pass # Replace with function body.
-
 
 func _on_hurtbox_area_entered(area):
 	if area.is_in_group('damage_enemy'): 
 		health -= area.damage
-		state = HIT
-		print(health)
+

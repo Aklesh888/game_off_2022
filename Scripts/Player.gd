@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export (int) var speed = 100
+export (int) var speed = 150
 var input = Vector2.ZERO
 var state = MOVE
 var weapon_state = null
@@ -30,6 +30,8 @@ onready var sword_position = $sword_placement
 onready var animations = $AnimatedSprite
 onready var weapon_detector = $weapon_detector
 onready var health_box = $Health/ProgressBar
+onready var animationTree = $AnimationTree
+onready var animationState = animationTree.get('parameters/playback')
 
 onready var sword_symbol = preload("res://Scenes/sword_symbol.tscn")
 onready var bow_symbol = preload("res://Scenes/bow_symbol.tscn")
@@ -44,18 +46,24 @@ func _input(event):
 	if event.is_action_pressed('pick'):
 		weapon_detecting()
 
+func weapon_in_hand():
+	if sword_in_hand != null:
+		sword_in_hand.look_at(get_global_mouse_position()) 
+	
+	if bow_in_hand != null:
+		bow_in_hand.look_at(get_global_mouse_position())
+		bow_in_hand
 
 func _physics_process(delta):
 	health_box.value = health
-	if sword_in_hand != null:
-		sword_in_hand.look_at(get_global_mouse_position()) 
-	if bow_in_hand != null:
-		bow_in_hand.look_at(get_global_mouse_position())
-	if Input.is_action_just_pressed("pick") and current_weapon != null:
+	weapon_in_hand()
+	
+	
+	if Input.is_action_just_pressed("drop") and current_weapon != null:
 		weapon_drop()
+
 	match state:
 		IDLE:
-			print('idle')
 			animations.play("Idle")
 		MOVE:
 			get_input()
@@ -73,12 +81,17 @@ func _on_hurtbox_area_entered(area):
 
 
 func get_input():
-	input.x = Input.get_axis("move_left", "move_right")
-	input.y = Input.get_axis("move_forward", "move_backward")
+	input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	input.y = Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
 	input = input.normalized()
 	velocity = input * speed
 	velocity = move_and_slide(velocity)
-
+	animationTree.set("parameters/run/blend_position", global_position.direction_to(get_global_mouse_position()))
+	animationTree.set("parameters/idle/blend_position", global_position.direction_to(get_global_mouse_position()))
+	if input != Vector2.ZERO:
+		animationState.travel('run')
+	else:
+		animationState.travel('idle')
 
 func sword_attack():
 	if Input.is_action_just_pressed("shoot"):
@@ -98,6 +111,8 @@ func bow_attack():
 			add_child(arrow)
 			arrow.direction = global_position.direction_to(get_global_mouse_position())
 			arrow.position = bow_in_hand.arrow_position.global_position
+	else:
+		return
 
 
 func weapon_detecting():
@@ -132,9 +147,13 @@ func weapon_drop():
 	if current_weapon == S:
 		var dropped_sword = sword_symbol.instance()
 		add_child(dropped_sword)
+		dropped_sword.set_as_toplevel(true)
 		dropped_sword.position = global_position
+		sword_in_hand.queue_free()
 	if current_weapon == B:
 		var dropped_bow = bow_symbol.instance()
 		add_child(dropped_bow)
+		dropped_bow.set_as_toplevel(true)
 		dropped_bow.position = global_position
+		bow_in_hand.queue_free()
 

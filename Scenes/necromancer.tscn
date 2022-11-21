@@ -124,7 +124,6 @@ position = Vector2( 0, 4 )
 shape = SubResource( 7 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
 autostart = true
 
 [node name="hurtbox" type="Area2D" parent="."]

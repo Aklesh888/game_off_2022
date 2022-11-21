@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/14 - Curse.ogg-33ae5502b5bf46c3f5e8f4f88aae817d.oggstr"
+
+[deps]
+
+source_file="res://Assets/Musics/14 - Curse.ogg"
+dest_files=[ "res://.import/14 - Curse.ogg-33ae5502b5bf46c3f5e8f4f88aae817d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

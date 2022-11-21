@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/25 - End Theme 2.ogg-81a608250b7476ac175198ba3fdd0883.oggstr"
+
+[deps]
+
+source_file="res://Assets/Musics/25 - End Theme 2.ogg"
+dest_files=[ "res://.import/25 - End Theme 2.ogg-81a608250b7476ac175198ba3fdd0883.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

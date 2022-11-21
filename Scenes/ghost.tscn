@@ -1,4 +1,4 @@
-[gd_scene load_steps=380 format=2]
+[gd_scene load_steps=381 format=2]
 
 [ext_resource path="res://Assets/E_Bros_Assets_TopDownEnemy/Enemy-Melee-Death.png" type="Texture" id=1]
 [ext_resource path="res://Assets/E_Bros_Assets_TopDownEnemy/Enemy-Melee-Attack-N.png" type="Texture" id=2]
@@ -2567,15 +2567,20 @@ ProgressBar/styles/fg = SubResource( 371 )
 radius = 27.5
 height = 105.0
 
-[node name="ghost" type="KinematicBody2D"]
+[sub_resource type="Environment" id=375]
+glow_enabled = true
+
+[node name="ghost" type="KinematicBody2D" groups=["enemy"]]
 scale = Vector2( 0.4, 0.4 )
-collision_layer = 2
+collision_layer = 0
+collision_mask = 0
 script = ExtResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+self_modulate = Color( 2.32, 15.12, 16.76, 1 )
 frames = SubResource( 1 )
 animation = "idle_up_left"
-frame = 8
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
@@ -2643,6 +2648,9 @@ collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
 shape = SubResource( 373 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 375 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="area_entered" from="hurt_box" to="." method="_on_hurt_box_area_entered"]
