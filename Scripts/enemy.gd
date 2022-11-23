@@ -32,7 +32,6 @@ func _physics_process(delta):
 	health_box.value = health
 
 func movement():
-	
 	death()
 	detect_player_in_area()
 	match state:

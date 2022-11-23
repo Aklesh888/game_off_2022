@@ -4,7 +4,7 @@
 [ext_resource path="res://sword.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3, 14.0308 )
+extents = Vector2( 6, 7.5 )
 
 [node name="sword" type="Area2D" groups=["damage_enemy"]]
 collision_layer = 16
@@ -18,7 +18,7 @@ scale = Vector2( 0.552405, 0.596662 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 14.9693, -3.8147e-06 )
+position = Vector2( 24.5, 5.42981e-06 )
 rotation = 1.5708
 shape = SubResource( 1 )
 disabled = true

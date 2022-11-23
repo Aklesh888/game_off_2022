@@ -2,7 +2,7 @@ extends Area2D
 
 var direction = Vector2.ZERO
 var state
-var health = 200
+var health = 100
 var enemy = preload("res://Scenes/skull.tscn")
 onready var health_box = $Control/ProgressBar
 onready var timer = $Timer
@@ -22,11 +22,12 @@ func spawner():
 	enemies()
 
 func enemies():
-	var enemy_position_x = rand_range(global_position.x - 500, global_position.x )
-	var enemy_position_y = rand_range(global_position.y - 500, global_position.y )
+	var enemy_position_x = rand_range(global_position.x - 200, global_position.x +200)
+	var enemy_position_y = rand_range(global_position.y - 200, global_position.y +200)
 	var new_enemy = enemy.instance()
 	add_child(new_enemy)
 	new_enemy.position = Vector2(enemy_position_x, enemy_position_y)
+	new_enemy.set_as_toplevel(true)
 
 
 func _on_Timer_timeout():
@@ -40,6 +41,7 @@ func _physics_process(delta):
 	health_box.value = health
 	if health <= 0:
 		queue_free()
+
 	match state:
 		idle:
 			animations.play("idle")
@@ -51,6 +53,6 @@ func _on_AnimationPlayer_animation_started(attack):
 
 
 func _on_hurtbox_area_entered(area):
-	print(health)
 	if area.is_in_group('damage_enemy'): 
 		health -= area.damage
+		print(health)

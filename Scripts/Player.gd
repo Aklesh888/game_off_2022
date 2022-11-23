@@ -24,8 +24,11 @@ enum {
 	MOVE,
 }
 
-onready var bow_in_hand: Node
-onready var sword_in_hand: Node
+var bow_in_hand: Node
+var sword_in_hand: Node
+var bow_reference 
+var sword_reference
+
 onready var sword_position = $sword_placement
 onready var animations = $AnimatedSprite
 onready var weapon_detector = $weapon_detector
@@ -45,22 +48,23 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed('pick'):
 		weapon_detecting()
+		
+
 
 func weapon_in_hand():
-	if sword_in_hand != null:
-		sword_in_hand.look_at(get_global_mouse_position()) 
+	if is_instance_valid(bow_in_hand):
+		bow_in_hand.look_at(get_global_mouse_position()) 
+	else:
+		return
 	
-	if bow_in_hand != null:
-		bow_in_hand.look_at(get_global_mouse_position())
-		bow_in_hand
 
 func _physics_process(delta):
-	health_box.value = health
 	weapon_in_hand()
-	
-	
+	health_box.value = health
+
 	if Input.is_action_just_pressed("drop") and current_weapon != null:
 		weapon_drop()
+		weapon_on_hand = false
 
 	match state:
 		IDLE:
@@ -97,11 +101,13 @@ func sword_attack():
 	if Input.is_action_just_pressed("shoot"):
 		sword_in_hand.hit_box.disabled = false
 		sword_in_hand.sword_animation()
-		sword_in_hand.previous_position = sword_position.global_position.direction_to(sword_in_hand.global_position)
+		sword_in_hand.previous_position = sword_position.global_position.direction_to(global_position)
 		sword_in_hand.timer.start()
+		print(sword_position.global_position)
+		print(sword_in_hand.previous_position)
 
 func bow_attack():
-	if bow_in_hand != null:
+	if is_instance_valid(bow_in_hand):
 		if Input.is_action_just_pressed("shoot"):
 			bow_in_hand.sprites.frame = 1 
 
@@ -127,6 +133,7 @@ func weapon_detecting():
 				current_weapon = S
 				sword_in_hand = get_node('../Player/sword')
 				weapon_on_hand = true
+				sword_reference = weakref(sword_in_hand)
 			elif weapon.is_in_group('bow_pickable'):
 				var bow = BOW.instance()
 				add_child(bow)
@@ -135,6 +142,8 @@ func weapon_detecting():
 				current_weapon = B
 				bow_in_hand = $'../Player/bow'
 				weapon_on_hand = true
+				bow_reference = weakref(bow_in_hand)
+
 
 func weapon_state_checker():
 	if current_weapon == S:
@@ -150,10 +159,15 @@ func weapon_drop():
 		dropped_sword.set_as_toplevel(true)
 		dropped_sword.position = global_position
 		sword_in_hand.queue_free()
+
 	if current_weapon == B:
 		var dropped_bow = bow_symbol.instance()
 		add_child(dropped_bow)
 		dropped_bow.set_as_toplevel(true)
 		dropped_bow.position = global_position
 		bow_in_hand.queue_free()
+		
 
+
+func _on_sword_cd_timeout():
+	sword_attack()

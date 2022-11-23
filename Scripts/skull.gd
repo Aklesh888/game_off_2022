@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var speed = 2
+var speed = 1
 var health = 100
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
@@ -22,7 +22,7 @@ func _physics_process(delta):
 func _on_hurtbox_area_entered(area):
 	if area.is_in_group('damage_enemy'):
 		queue_free()
-	print('collided')
+
 
 
 func _on_hit_box_body_entered(body):
