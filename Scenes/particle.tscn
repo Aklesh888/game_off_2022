@@ -1,5 +1,0 @@
-[gd_scene format=2]
-
-[node name="particle" type="Node2D"]
-
-[node name="Particles2D" type="Particles2D" parent="."]
