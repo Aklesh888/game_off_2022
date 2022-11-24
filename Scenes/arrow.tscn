@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Bow and Arrows.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/arrow.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 7.0
+
+[node name="arrow" type="Area2D" groups=["damage_enemy"]]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="." groups=["damage_enemy"]]
+texture = ExtResource( 1 )
+offset = Vector2( 7, 0 )
+hframes = 3
+vframes = 3
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["damage_enemy"]]
+position = Vector2( 13, 0 )
+shape = SubResource( 1 )
+
+[connection signal="area_entered" from="." to="." method="_on_arrow_area_entered"]
