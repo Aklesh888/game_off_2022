@@ -292,6 +292,7 @@ points = PoolVector2Array( 24.1596, 27.7339, 9.75897, 27.7339, 9.75897, 15.6775,
 6/z_index = 0
 
 [node name="Level_1" type="Node2D"]
+rotation = -0.00129712
 
 [node name="floor" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
@@ -307,7 +308,7 @@ position = Vector2( 907, 237 )
 rotation = -0.0786879
 
 [node name="sword_symbol" parent="." instance=ExtResource( 5 )]
-position = Vector2( 272, 43 )
+position = Vector2( 1010.69, 237.311 )
 
 [node name="YSort" type="YSort" parent="."]
 

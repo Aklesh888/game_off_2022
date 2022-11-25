@@ -6,7 +6,7 @@ var velocity = Vector2.ZERO
 var direction = Vector2.ZERO
 var damage = 10
 
-const SPEED = 5
+const SPEED = 4
 
 func _ready():
 	animations.play("fire")

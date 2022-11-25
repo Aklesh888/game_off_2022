@@ -8,6 +8,7 @@ var health = 100
 var velocity = Vector2.ZERO
 var current_weapon = null 
 var weapon_on_hand = false
+var dodge_speed = 1000
 
 enum {
 	S,
@@ -22,6 +23,7 @@ enum {
 enum {
 	IDLE,
 	MOVE,
+	DODGE
 }
 
 var bow_in_hand: Node
@@ -46,6 +48,8 @@ func _ready():
 	sword_position.set_as_toplevel(true)
 
 func _input(event):
+#	if Input.is_action_just_pressed("dodge"):
+#		state = DODGE
 	if event.is_action_pressed('pick'):
 		weapon_detecting()
 		
@@ -59,6 +63,7 @@ func weapon_in_hand():
 	
 
 func _physics_process(delta):
+
 	weapon_in_hand()
 	health_box.value = health
 
@@ -71,6 +76,8 @@ func _physics_process(delta):
 			animations.play("Idle")
 		MOVE:
 			get_input()
+		DODGE:
+			dodge()
 	
 	match weapon_state:
 		SWORD_STATE:
@@ -100,11 +107,9 @@ func get_input():
 func sword_attack():
 	if Input.is_action_just_pressed("shoot"):
 		sword_in_hand.hit_box.disabled = false
-		sword_in_hand.sword_animation()
-		sword_in_hand.previous_position = sword_position.global_position.direction_to(global_position)
-		sword_in_hand.timer.start()
-		print(sword_position.global_position)
-		print(sword_in_hand.previous_position)
+#		sword_in_hand.sword_attack(global_position.direction_to(get_global_mouse_position()))
+#		sword_in_hand.previous_position = sword_position.global_position.direction_to(global_position)
+#		sword_in_hand.timer.start()
 
 func bow_attack():
 	if is_instance_valid(bow_in_hand):
@@ -146,7 +151,7 @@ func weapon_detecting():
 
 
 func weapon_state_checker():
-	if current_weapon == S:
+	if current_weapon == S and is_instance_valid(sword_in_hand):
 		weapon_state = SWORD_STATE
 	elif current_weapon == B:
 		weapon_state = BOW_STATE
@@ -171,3 +176,9 @@ func weapon_drop():
 
 func _on_sword_cd_timeout():
 	sword_attack()
+
+func dodge():
+	move_and_slide(dodge_speed * input)
+		
+		
+		
