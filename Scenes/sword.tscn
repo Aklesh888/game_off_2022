@@ -426,7 +426,6 @@ anims/look_up_right = SubResource( 36 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 17 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 18 )
 parameters/attack/blend_position = Vector2( -0.971154, 0.83815 )
 parameters/not_attacking/blend_position = Vector2( 0.160256, 1.21552 )

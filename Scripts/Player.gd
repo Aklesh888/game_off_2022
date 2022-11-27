@@ -52,8 +52,6 @@ func _input(event):
 #		state = DODGE
 	if event.is_action_pressed('pick'):
 		weapon_detecting()
-		
-
 
 func weapon_in_hand():
 	if is_instance_valid(bow_in_hand):
@@ -107,9 +105,10 @@ func get_input():
 func sword_attack():
 	if Input.is_action_just_pressed("shoot"):
 		sword_in_hand.hit_box.disabled = false
-#		sword_in_hand.sword_attack(global_position.direction_to(get_global_mouse_position()))
+		sword_in_hand.sword_animation()
 #		sword_in_hand.previous_position = sword_position.global_position.direction_to(global_position)
-#		sword_in_hand.timer.start()
+		sword_in_hand.timer.start()
+		print(sword_position.global_position)
 
 func bow_attack():
 	if is_instance_valid(bow_in_hand):
